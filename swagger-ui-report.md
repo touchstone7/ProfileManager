@@ -1,14 +1,12 @@
 ﻿# Swagger UI Verification Report
 
-Generated: 2026-06-14 14:15 IST
+Generated: 2026-06-18 14:00 IST
 
 ## Runtime Verification
 
 | Check | Result |
 | --- | --- |
 | Service startup | Passed, Spring Boot started on port 8080 |
-| Java runtime | OpenJDK 17.0.7, IntelliJ JBR |
-| Gradle runtime | Gradle 8.2.1 |
 | Health endpoint | UP |
 | Swagger UI | HTTP 200 at http://localhost:8080/swagger-ui.html |
 | OpenAPI JSON | HTTP 200 at http://localhost:8080/v3/api-docs |

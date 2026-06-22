@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 public record UpdateProfileRequest(
         @Email @Size(max = 120) String email,
@@ -19,6 +21,7 @@ public record UpdateProfileRequest(
         @Size(max = 120) String avatarUrl,
         @Size(max = 40) String preferredLanguage,
         @Size(max = 40) String timeZone,
-        ProfileStatus status
+        ProfileStatus status,
+        List<UUID> roleIds
 ) {
 }

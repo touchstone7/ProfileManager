@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 public record CreateProfileRequest(
         @NotBlank @Size(max = 50) String username,
@@ -20,6 +22,7 @@ public record CreateProfileRequest(
         @Size(max = 500) String bio,
         @Size(max = 120) String avatarUrl,
         @Size(max = 40) String preferredLanguage,
-        @Size(max = 40) String timeZone
+        @Size(max = 40) String timeZone,
+        List<UUID> roleIds
 ) {
 }

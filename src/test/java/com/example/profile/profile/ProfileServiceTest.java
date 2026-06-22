@@ -32,7 +32,8 @@ class ProfileServiceTest {
                 "Leads platform teams.",
                 null,
                 "en-IN",
-                "Asia/Kolkata"
+                "Asia/Kolkata",
+                null
         );
 
         ProfileResponse response = profileService.create(request);
@@ -40,6 +41,7 @@ class ProfileServiceTest {
         assertThat(response.id()).isNotNull();
         assertThat(response.status()).isEqualTo(ProfileStatus.ACTIVE);
         assertThat(response.username()).isEqualTo("rahul.mehta");
+        assertThat(response.roles()).isEmpty();
     }
 
     @Test
@@ -49,6 +51,7 @@ class ProfileServiceTest {
                 "ananya.rao@example.com",
                 "Same",
                 "Email",
+                null,
                 null,
                 null,
                 null,

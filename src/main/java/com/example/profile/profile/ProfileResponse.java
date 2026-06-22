@@ -1,7 +1,9 @@
 package com.example.profile.profile;
 
+import com.example.profile.role.RoleSummaryResponse;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public record ProfileResponse(
@@ -21,10 +23,16 @@ public record ProfileResponse(
         String preferredLanguage,
         String timeZone,
         ProfileStatus status,
+        List<RoleSummaryResponse> roles,
         Instant createdAt,
         Instant updatedAt
 ) {
     static ProfileResponse from(Profile profile) {
+        List<RoleSummaryResponse> roles = profile.getRoles()
+                .stream()
+                .map(RoleSummaryResponse::from)
+                .toList();
+
         return new ProfileResponse(
                 profile.getId(),
                 profile.getUsername(),
@@ -42,6 +50,7 @@ public record ProfileResponse(
                 profile.getPreferredLanguage(),
                 profile.getTimeZone(),
                 profile.getStatus(),
+                roles,
                 profile.getCreatedAt(),
                 profile.getUpdatedAt()
         );

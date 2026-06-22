@@ -1,7 +1,10 @@
 package com.example.profile.profile;
 
+import com.example.profile.role.Role;
+import com.example.profile.role.RoleRepository;
 import com.example.profile.shared.ConflictException;
 import com.example.profile.shared.NotFoundException;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
+    private final RoleRepository roleRepository;
 
-    public ProfileService(ProfileRepository profileRepository) {
+    public ProfileService(ProfileRepository profileRepository, RoleRepository roleRepository) {
         this.profileRepository = profileRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Transactional
@@ -42,6 +47,7 @@ public class ProfileService {
         profile.setPreferredLanguage(request.preferredLanguage());
         profile.setTimeZone(request.timeZone());
         profile.setStatus(ProfileStatus.ACTIVE);
+        profile.setRoles(resolveRoles(request.roleIds()));
 
         return ProfileResponse.from(profileRepository.save(profile));
     }
@@ -115,6 +121,9 @@ public class ProfileService {
         if (request.status() != null) {
             profile.setStatus(request.status());
         }
+        if (request.roleIds() != null) {
+            profile.setRoles(resolveRoles(request.roleIds()));
+        }
 
         return ProfileResponse.from(profile);
     }
@@ -135,5 +144,17 @@ public class ProfileService {
     private Profile findProfile(UUID id) {
         return profileRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Profile not found: " + id));
+    }
+
+    private List<Role> resolveRoles(List<UUID> roleIds) {
+        if (roleIds == null || roleIds.isEmpty()) {
+            return List.of();
+        }
+
+        List<Role> roles = roleRepository.findByIdIn(roleIds);
+        if (roles.size() != roleIds.stream().distinct().count()) {
+            throw new NotFoundException("One or more roles were not found");
+        }
+        return roles;
     }
 }
