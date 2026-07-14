@@ -33,6 +33,7 @@ class ProfileServiceTest {
                 null,
                 "en-IN",
                 "Asia/Kolkata",
+                null,
                 null
         );
 
@@ -42,6 +43,7 @@ class ProfileServiceTest {
         assertThat(response.status()).isEqualTo(ProfileStatus.ACTIVE);
         assertThat(response.username()).isEqualTo("rahul.mehta");
         assertThat(response.roles()).isEmpty();
+        assertThat(response.skills()).isEmpty();
     }
 
     @Test
@@ -51,6 +53,7 @@ class ProfileServiceTest {
                 "ananya.rao@example.com",
                 "Same",
                 "Email",
+                null,
                 null,
                 null,
                 null,

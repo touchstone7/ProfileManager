@@ -1,5 +1,7 @@
 package com.example.profile.profile;
 
+import com.example.profile.skill.CreateSkillRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
@@ -23,6 +25,7 @@ public record CreateProfileRequest(
         @Size(max = 120) String avatarUrl,
         @Size(max = 40) String preferredLanguage,
         @Size(max = 40) String timeZone,
-        List<UUID> roleIds
+        List<UUID> roleIds,
+        List<@Valid CreateSkillRequest> skills
 ) {
 }

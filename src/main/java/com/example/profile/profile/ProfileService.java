@@ -2,6 +2,8 @@ package com.example.profile.profile;
 
 import com.example.profile.role.Role;
 import com.example.profile.role.RoleRepository;
+import com.example.profile.skill.CreateSkillRequest;
+import com.example.profile.skill.Skill;
 import com.example.profile.shared.ConflictException;
 import com.example.profile.shared.NotFoundException;
 import java.util.List;
@@ -48,6 +50,7 @@ public class ProfileService {
         profile.setTimeZone(request.timeZone());
         profile.setStatus(ProfileStatus.ACTIVE);
         profile.setRoles(resolveRoles(request.roleIds()));
+        profile.setSkills(resolveSkills(profile, request.skills()));
 
         return ProfileResponse.from(profileRepository.save(profile));
     }
@@ -124,6 +127,10 @@ public class ProfileService {
         if (request.roleIds() != null) {
             profile.setRoles(resolveRoles(request.roleIds()));
         }
+        if (request.skills() != null) {
+            profile.getSkills().clear();
+            profile.getSkills().addAll(resolveSkills(profile, request.skills()));
+        }
 
         return ProfileResponse.from(profile);
     }
@@ -156,5 +163,29 @@ public class ProfileService {
             throw new NotFoundException("One or more roles were not found");
         }
         return roles;
+    }
+
+    private List<Skill> resolveSkills(Profile profile, List<CreateSkillRequest> skillRequests) {
+        if (skillRequests == null || skillRequests.isEmpty()) {
+            return List.of();
+        }
+
+        long distinctNames = skillRequests.stream()
+                .map(request -> request.name().trim().toLowerCase())
+                .distinct()
+                .count();
+        if (distinctNames != skillRequests.size()) {
+            throw new ConflictException("Duplicate skill names are not allowed on a profile");
+        }
+
+        return skillRequests.stream()
+                .map(request -> {
+                    Skill skill = new Skill();
+                    skill.setName(request.name());
+                    skill.setDescription(request.description());
+                    skill.setProfile(profile);
+                    return skill;
+                })
+                .toList();
     }
 }

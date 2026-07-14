@@ -1,3 +1,28 @@
+insert into roles (
+    id,
+    name,
+    description,
+    active,
+    created_at,
+    updated_at
+) values
+(
+    '11111111-1111-1111-1111-111111111111',
+    'USER',
+    'Default role for standard user access.',
+    true,
+    current_timestamp,
+    current_timestamp
+),
+(
+    '22222222-2222-2222-2222-222222222222',
+    'PROFILE_ADMIN',
+    'Role for managing user profile records.',
+    true,
+    current_timestamp,
+    current_timestamp
+);
+
 insert into profiles (
     id,
     username,
@@ -18,7 +43,7 @@ insert into profiles (
     created_at,
     updated_at
 ) values (
-    random_uuid(),
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
     'ananya.rao',
     'ananya.rao@example.com',
     'Ananya',
@@ -36,4 +61,12 @@ insert into profiles (
     'ACTIVE',
     current_timestamp,
     current_timestamp
+);
+
+insert into profile_roles (
+    profile_id,
+    role_id
+) values (
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+    '11111111-1111-1111-1111-111111111111'
 );

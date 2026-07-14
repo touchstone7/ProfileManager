@@ -1,6 +1,7 @@
 package com.example.profile.profile;
 
 import com.example.profile.role.RoleSummaryResponse;
+import com.example.profile.skill.SkillSummaryResponse;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +25,7 @@ public record ProfileResponse(
         String timeZone,
         ProfileStatus status,
         List<RoleSummaryResponse> roles,
+        List<SkillSummaryResponse> skills,
         Instant createdAt,
         Instant updatedAt
 ) {
@@ -31,6 +33,10 @@ public record ProfileResponse(
         List<RoleSummaryResponse> roles = profile.getRoles()
                 .stream()
                 .map(RoleSummaryResponse::from)
+                .toList();
+        List<SkillSummaryResponse> skills = profile.getSkills()
+                .stream()
+                .map(SkillSummaryResponse::from)
                 .toList();
 
         return new ProfileResponse(
@@ -51,6 +57,7 @@ public record ProfileResponse(
                 profile.getTimeZone(),
                 profile.getStatus(),
                 roles,
+                skills,
                 profile.getCreatedAt(),
                 profile.getUpdatedAt()
         );

@@ -70,3 +70,27 @@ insert into profile_roles (
     'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
     '11111111-1111-1111-1111-111111111111'
 );
+
+insert into skills (
+    id,
+    name,
+    description,
+    profile_id,
+    created_at,
+    updated_at
+) values (
+    'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+    'Product Strategy',
+    'Defines product roadmaps and prioritization.',
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+    current_timestamp,
+    current_timestamp
+),
+(
+    'cccccccc-cccc-cccc-cccc-cccccccccccc',
+    'Stakeholder Management',
+    'Aligns cross-functional teams on delivery goals.',
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+    current_timestamp,
+    current_timestamp
+);
