@@ -26,7 +26,7 @@ public class RoleController {
     public RoleController(RoleService roleService) {
         this.roleService = roleService;
     }
-
+    // looking for CRUD operations this is a POST request to create a new role
     @PostMapping
     public ResponseEntity<RoleResponse> create(@Valid @RequestBody CreateRoleRequest request) {
         RoleResponse response = roleService.create(request);
@@ -36,7 +36,7 @@ public class RoleController {
                 .toUri();
         return ResponseEntity.created(location).body(response);
     }
-
+    // looking for CRUD operations this is a GET request to get a role by id
     @GetMapping("/{id}")
     public RoleResponse getById(@PathVariable UUID id) {
         return roleService.getById(id);
@@ -46,17 +46,17 @@ public class RoleController {
     public RoleResponse getByName(@PathVariable String name) {
         return roleService.getByName(name);
     }
-
+    // looking for CRUD operations this is a GET request to get all roles
     @GetMapping
     public Page<RoleResponse> list(@PageableDefault(size = 20, sort = "name") Pageable pageable) {
         return roleService.list(pageable);
     }
-
+    // looking for CRUD operations this is a PATCH request to update a role
     @PatchMapping("/{id}")
     public RoleResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateRoleRequest request) {
         return roleService.update(id, request);
     }
-
+    // looking for CRUD operations this is a DELETE request to delete a role
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         roleService.delete(id);
